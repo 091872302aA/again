@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+</head>
+<body>
+    <h1>All Orders</h1>
+    <div id="orders"></div>
+
+    <script>
+        function displayOrders() {
+            const ordersDiv = document.getElementById('orders');
+            ordersDiv.innerHTML = '';
+            
+            // ลองตรวจสอบข้อมูลจาก sessionStorage สำหรับแต่ละโต๊ะ
+            for (let i = 1; i <= 10; i++) {
+                const order = JSON.parse(sessionStorage.getItem(order_table_${i}));
+                if (order) {
+                    const tableOrderDiv = document.createElement('div');
+                    tableOrderDiv.innerHTML = <h3>Table ${i}</h3>;
+                    order.forEach(item => {
+                        tableOrderDiv.innerHTML += <p>${item.name} x ${item.quantity} - ฿${item.price * item.quantity}</p>;
+                    });
+                    ordersDiv.appendChild(tableOrderDiv);
+                }
+            }
+        }
+
+        // แสดงคำสั่งซื้อเมื่อโหลดหน้า
+        displayOrders();
+
+        // รีเฟรชทุก ๆ 10 วินาที เพื่ออัปเดตคำสั่งซื้อใหม่
+        setInterval(displayOrders, 10000);
+    </script>
+</body>
+</html>
